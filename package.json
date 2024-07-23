@@ -1,0 +1,19 @@
+{
+  "name": "json-https",
+  "version": "1.0.0",
+  "main": "src/tests/index.ts",
+  "scripts": {
+    "setup:api-cert": "openssl req -x509 -nodes -new -sha256 -days 357000 -newkey rsa:2048 -keyout api/json-server-https/cert/RootCA.key -out api/json-server-https/cert/RootCA.pem -subj \"/C=US/CN=Example-Root-CA\" && openssl x509 -outform pem -in api/json-server-https/cert/RootCA.pem -out api/json-server-https/cert/RootCA.crt && openssl req -new -nodes -newkey rsa:2048 -keyout api/json-server-https/cert/localhost.key -out api/json-server-https/cert/localhost.csr -subj \"/C=US/ST=YourState/L=YourCity/O=Example-Certificates/CN=localhost.local\" && openssl x509 -req -sha256 -days 357000 -in api/json-server-https/cert/localhost.csr -CA api/json-server-https/cert/RootCA.pem -CAkey api/json-server-https/cert/RootCA.key -CAcreateserial -extfile api/json-server-https/cert/domains.ext -out api/json-server-https/cert/localhost.crt",
+    "start:json-server": "npx ts-node api/json-server-https/setup.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "fs": "^0.0.1-security",
+    "json-server": "^0.17.4",
+    "path": "^0.12.7",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.3"
+  }
+}

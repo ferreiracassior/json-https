@@ -1,0 +1,25 @@
+// https-json-server.js
+import * as jsonServer from 'json-server';
+import * as https from 'https';
+import * as selfsigned from 'selfsigned'
+
+var attrs = [{ name: 'localhost:5001', value: 'localhost' }];
+var pems = selfsigned.generate(attrs, { days: 1 });
+pems.private
+console.log(pems)
+
+const server = jsonServer.create();
+
+https
+  .createServer(
+    {
+      key: pems.private,
+      cert: pems.cert,
+    },
+    server
+  )
+  .listen(3000, () => {
+    console.log(
+      'Go to https://localhost:3000/'
+    );
+  });
